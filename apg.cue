@@ -16,10 +16,10 @@ _source:     core.#Source & {path: "./proxies"}
 
 dagger.#Plan & {
 	actions: {
-		deployAll: {
+		deploy: {
 			proxies: string | *"" //comma-separated list of proxy dirs
 			for proxy in strings.Split(proxies, ",") {
-				"create_proxy_\(proxy)": docker.#Run & {
+				"\(proxy)": docker.#Run & {
 					command: {
 						name: "/bin/sh"
 						args: ["-c", "ls -R -al /source/\(proxy)"]
@@ -34,6 +34,7 @@ dagger.#Plan & {
 					}
 				}
 			}
+
 		}
 	}
 }
